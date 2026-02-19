@@ -1,8 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/api/:path*",
-            "destination": "https://your-backend-api-url.vercel.app/api/:path*"
+            "source": "/api/(.*)",
+            "destination": "https://secrate-note.vercel.app/api/$1"
         }
     ]
 }
