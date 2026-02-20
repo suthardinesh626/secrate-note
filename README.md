@@ -58,9 +58,19 @@ The client runs on `http://localhost:5173` and proxies API requests to the backe
 
 ## Features
 
-- 🔒 Notes are protected with auto-generated, bcrypt-hashed passwords
-- 🔗 Shareable URLs for each note
-- 📋 Copy-to-clipboard for URL and password
-- ✨ AI-powered note summarization via Google Gemini
-- ✅ Input validation and error handling
-- ⏳ Loading states on all async operations
+-  Notes are protected with auto-generated, bcrypt-hashed passwords
+-  Shareable URLs for each note
+-  Copy-to-clipboard for URL and password
+-  AI-powered note summarization via Google Gemini
+-  Input validation and error handling
+-  Loading states on all async operations
+
+## Potential Future Improvements
+
+- **Custom Expiration Times**: Allow users to choose when a note expires (e.g., 1 hour, 1 day, 1 month) instead of a fixed 1-week TTL.
+- **Burn-on-Read**: Option to automatically delete the note immediately after the first time it is unlocked and viewed.
+- **Rich Text Support**: Implement a Markdown or WYSIWYG editor for more expressive note-taking.
+- **Note Attachments**: Support for securely uploading and encrypting small file attachments within a note.
+- **Advanced AI Insights**: Expand AI features to include action item extraction, sentiment analysis, and multi-language translation.
+- **User Dashboard**: An optional account system for users to view and manage their own active (non-expired) notes.
+- **Browser Extension**: A quick-access extension to create secure notes directly from the browser toolbar.
