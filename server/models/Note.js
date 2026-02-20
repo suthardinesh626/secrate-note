@@ -17,4 +17,6 @@ const noteSchema = new mongoose.Schema(
     }
 );
 
+noteSchema.index({ createdAt: 1 }, { expireAfterSeconds: 604800 });
+
 module.exports = mongoose.model("Note", noteSchema);
