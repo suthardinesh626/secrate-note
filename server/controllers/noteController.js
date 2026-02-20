@@ -131,7 +131,7 @@ const summarizeNote = async (req, res, next) => {
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({
             model: "gemini-flash-latest",
-            systemInstruction: "Strictly summarize the note into 3-5 extremely short bullet points. Use short fragments, NOT full sentences. Max 5 words per bullet. Strictly ONLY bullet points. No conversational filler, no intro text."
+            systemInstruction: "Strictly summarize the note into 3-5 short bullet points. Use short fragments, NOT full sentences. Strictly ONLY bullet points. Each sentence should be make sence. also make sure that bullet point should be relevant to the note."
         });
 
         const prompt = `Note content:\n${note.noteText}`;
