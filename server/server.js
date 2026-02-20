@@ -1,20 +1,17 @@
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const connectDB = require("./config/db");
-const noteRoutes = require("./routes/noteRoutes");
-const errorHandler = require("./middleware/errorHandler");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js";
+import noteRoutes from "./routes/noteRoutes.js";
+import errorHandler from "./middleware/errorHandler.js";
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
 
-// Global Middleware
 app.use(cors());
 app.use(express.json());
 
-// Middleware to ensure DB is connected
 app.use(async (req, res, next) => {
     try {
         await connectDB();
@@ -24,7 +21,6 @@ app.use(async (req, res, next) => {
     }
 });
 
-// Routes
 app.use("/api/notes", noteRoutes);
 
 // Health check
@@ -32,10 +28,9 @@ app.get("/api/health", (req, res) => {
     res.json({ success: true, message: "Server is running" });
 });
 
-// Centralized error handler (must be after routes)
 app.use(errorHandler);
 
-// For local development
+
 if (process.env.NODE_ENV !== "production") {
     const PORT = process.env.PORT || 5001;
     app.listen(PORT, () => {
@@ -43,5 +38,4 @@ if (process.env.NODE_ENV !== "production") {
     });
 }
 
-// Export for Vercel
-module.exports = app;
+export default app;

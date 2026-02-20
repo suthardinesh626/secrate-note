@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 let cachedConnection = null;
 
@@ -14,9 +14,8 @@ const connectDB = async () => {
     return conn;
   } catch (error) {
     console.error(`MongoDB connection error: ${error.message}`);
-    // In serverless, we don't want to process.exit(1) as it kills the whole container
     throw error;
   }
 };
 
-module.exports = connectDB;
+export default connectDB;

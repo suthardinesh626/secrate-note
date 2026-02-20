@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const noteSchema = new mongoose.Schema(
     {
@@ -19,4 +19,4 @@ const noteSchema = new mongoose.Schema(
 
 noteSchema.index({ createdAt: 1 }, { expireAfterSeconds: 604800 });
 
-module.exports = mongoose.model("Note", noteSchema);
+export default mongoose.model("Note", noteSchema);

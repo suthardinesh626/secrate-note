@@ -1,12 +1,11 @@
-const crypto = require("crypto");
-const bcrypt = require("bcrypt");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const Note = require("../models/Note");
+import crypto from "crypto";
+import bcrypt from "bcrypt";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import Note from "../models/Note.js";
 
 const SALT_ROUNDS = 10;
 
-// @desc    Create a new note
-// @route   POST /api/notes
+// Create a new note
 const createNote = async (req, res, next) => {
     try {
         const { noteText, password } = req.body;
@@ -45,7 +44,7 @@ const createNote = async (req, res, next) => {
             data: {
                 noteId: note._id,
                 noteUrl: `/note/${note._id}`,
-                password: password, // Echo back for confirmation
+                password: password,
             },
         });
     } catch (error) {
@@ -53,8 +52,7 @@ const createNote = async (req, res, next) => {
     }
 };
 
-// @desc    Unlock a note with password
-// @route   POST /api/notes/:id/unlock
+// Unlock a note with password
 const unlockNote = async (req, res, next) => {
     try {
         const { password } = req.body;
@@ -94,8 +92,7 @@ const unlockNote = async (req, res, next) => {
     }
 };
 
-// @desc    Summarize a note using Gemini AI
-// @route   POST /api/notes/:id/summarize
+// Summarize a note using Gemini AI
 const summarizeNote = async (req, res, next) => {
     try {
         const { password } = req.body;
@@ -170,4 +167,4 @@ const summarizeNote = async (req, res, next) => {
     }
 };
 
-module.exports = { createNote, unlockNote, summarizeNote };
+export { createNote, unlockNote, summarizeNote };

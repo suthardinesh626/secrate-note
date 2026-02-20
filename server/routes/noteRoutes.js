@@ -1,13 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const {
+import express from "express";
+import {
     createNote,
     unlockNote,
     summarizeNote,
-} = require("../controllers/noteController");
+} from "../controllers/noteController.js";
+
+const router = express.Router();
 
 router.post("/", createNote);
 router.post("/:id/unlock", unlockNote);
 router.post("/:id/summarize", summarizeNote);
 
-module.exports = router;
+export default router;
