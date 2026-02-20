@@ -10,11 +10,13 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 const MAX_CHARS = 500;
 
 export default function CreateNote() {
     const [noteText, setNoteText] = useState("");
+    const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [result, setResult] = useState(null);
@@ -35,12 +37,20 @@ export default function CreateNote() {
             return;
         }
 
+        if (!password.trim()) {
+            setError("Password is required.");
+            return;
+        }
+
         setLoading(true);
         try {
             const res = await fetch("/api/notes", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ noteText: noteText.trim() }),
+                body: JSON.stringify({
+                    noteText: noteText.trim(),
+                    password: password.trim()
+                }),
             });
 
             const data = await res.json();
@@ -51,6 +61,7 @@ export default function CreateNote() {
 
             setResult(data.data);
             setNoteText("");
+            setPassword("");
         } catch (err) {
             setError(err.message);
         } finally {
@@ -105,6 +116,19 @@ export default function CreateNote() {
                             </p>
                         </div>
 
+                        <div className="space-y-2">
+                            <Label htmlFor="password">Set Password</Label>
+                            <Input
+                                id="password"
+                                type="password"
+                                placeholder="Choose a password to protect this note"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                disabled={loading}
+                                required
+                            />
+                        </div>
+
                         {error && (
                             <Alert variant="destructive">
                                 <AlertTitle>Error</AlertTitle>
@@ -146,18 +170,18 @@ export default function CreateNote() {
             </Card>
 
             {result && (
-                <Card className="mt-6 border-green-200 bg-green-50">
+                <Card className="mt-6 border-white-200 bg-white-50">
                     <CardHeader>
-                        <CardTitle className="text-green-800">
-                            ✅ Note Created Successfully
+                        <CardTitle className="text-black-800">
+                            Note Created Successfully
                         </CardTitle>
-                        <CardDescription className="text-green-700">
-                            Save these details — the password will not be shown again.
+                        <CardDescription className="text-black-700">
+                            Save these below details, the password will not be shown again.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="space-y-1">
-                            <Label className="text-green-800 font-medium">
+                            <Label className="text-black-800 font-medium">
                                 Shareable URL
                             </Label>
                             <div className="flex gap-2">
@@ -176,7 +200,7 @@ export default function CreateNote() {
                         </div>
 
                         <div className="space-y-1">
-                            <Label className="text-green-800 font-medium">Password</Label>
+                            <Label className="text-black-800 font-medium">Password</Label>
                             <div className="flex gap-2">
                                 <code className="flex-1 bg-white border rounded px-3 py-2 text-sm font-mono">
                                     {result.password}

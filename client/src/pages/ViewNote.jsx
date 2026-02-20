@@ -91,7 +91,7 @@ export default function ViewNote() {
             <div className="max-w-md mx-auto">
                 <Card>
                     <CardHeader>
-                        <CardTitle>🔒 Unlock Note</CardTitle>
+                        <CardTitle>Unlock Note</CardTitle>
                         <CardDescription>
                             Enter the password to view this note.
                         </CardDescription>

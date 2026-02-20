@@ -9,7 +9,7 @@ const SALT_ROUNDS = 10;
 // @route   POST /api/notes
 const createNote = async (req, res, next) => {
     try {
-        const { noteText } = req.body;
+        const { noteText, password } = req.body;
 
         // Validation
         if (!noteText || noteText.trim().length === 0) {
@@ -24,11 +24,14 @@ const createNote = async (req, res, next) => {
             throw error;
         }
 
-        // Generate a random password (12 characters, URL-safe)
-        const plainPassword = crypto.randomBytes(9).toString("base64url");
+        if (!password || password.trim().length === 0) {
+            const error = new Error("Password is required");
+            error.statusCode = 400;
+            throw error;
+        }
 
-        // Hash the password
-        const passwordHash = await bcrypt.hash(plainPassword, SALT_ROUNDS);
+        // Hash the provided password
+        const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
         // Save note to database
         const note = await Note.create({
@@ -36,13 +39,13 @@ const createNote = async (req, res, next) => {
             passwordHash,
         });
 
-        // Return shareable URL and password (shown only once)
+        // Return shareable URL and password
         res.status(201).json({
             success: true,
             data: {
                 noteId: note._id,
                 noteUrl: `/note/${note._id}`,
-                password: plainPassword,
+                password: password, // Echo back for confirmation
             },
         });
     } catch (error) {
